@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box" style="width: 100em; height: 500px"></div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    var chartDom = document.getElementById("box");
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    const updateFrequency = 2000;
+    const dimension = 0;
+    const countryColors = {
+      澳大利亚: "#00008b",
+      加拿大: "#f00",
+      中国: "#ffde00",
+      古巴: "#002a8f",
+      芬兰: "#003580",
+      法国: "#ed2939",
+      德国: "#000",
+      冰岛: "#003897",
+      印度: "#f93",
+      日本: "#bc002d",
+      北朝鲜: "#024fa2",
+      韩国: "#000",
+      新西兰: "#00247d",
+      挪威: "#ef2b2d",
+      波兰: "#dc143c",
+      俄罗斯: "#d52b1e",
+      土耳其: "#e30a17",
+      英国: "#00247d",
+      美利坚合众国: "#b22234",
+    };
+    $.when(
+      $.getJSON("https://fastly.jsdelivr.net/npm/emoji-flags@1.3.0/data.json"),
+      $.getJSON("../json/life-expectancy-table.json")
+    ).done(function (res0, res1) {
+      const flags = res0[0];
+      const data = res1[0];
+      const years = [];
+      for (let i = 0; i < data.length; ++i) {
+        if (years.length === 0 || years[years.length - 1] !== data[i][4]) {
+          years.push(data[i][4]);
+        }
+      }
+      function getFlag(countryName) {
+        if (!countryName) {
+          return "";
+        }
+        return (
+          flags.find(function (item) {
+            return item.name === countryName;
+          }) || {}
+        ).emoji;
+      }
+      let startIndex = 10;
+      let startYear = years[startIndex];
+      option = {
+        grid: {
+          top: 10,
+          bottom: 30,
+          left: 150,
+          right: 80,
+        },
+        xAxis: {
+          max: "dataMax",
+          axisLabel: {
+            formatter: function (n) {
+              return Math.round(n) + "";
+            },
+          },
+        },
+        dataset: {
+          source: data.slice(1).filter(function (d) {
+            return d[4] === startYear;
+          }),
+        },
+        yAxis: {
+          type: "category",
+          inverse: true,
+          max: 10,
+          axisLabel: {
+            show: true,
+            fontSize: 14,
+            formatter: function (value) {
+              return value + "{flag|" + getFlag(value) + "}";
+            },
+            rich: {
+              flag: {
+                fontSize: 25,
+                padding: 5,
+              },
+            },
+          },
+          animationDuration: 300,
+          animationDurationUpdate: 300,
+        },
+        series: [
+          {
+            realtimeSort: true,
+            seriesLayoutBy: "column",
+            type: "bar",
+            itemStyle: {
+              color: function (param) {
+                return countryColors[param.value[3]] || "#5470c6";
+              },
+            },
+            encode: {
+              x: dimension,
+              y: 3,
+            },
+            label: {
+              show: true,
+              precision: 1,
+              position: "right",
+              valueAnimation: true,
+              fontFamily: "monospace",
+            },
+          },
+        ],
+        // Disable init animation.
+        animationDuration: 0,
+        animationDurationUpdate: updateFrequency,
+        animationEasing: "linear",
+        animationEasingUpdate: "linear",
+        graphic: {
+          elements: [
+            {
+              type: "text",
+              right: 160,
+              bottom: 60,
+              style: {
+                text: startYear,
+                font: "bolder 80px monospace",
+                fill: "rgba(100, 100, 100, 0.25)",
+              },
+              z: 100,
+            },
+          ],
+        },
+      };
+      // console.log(option);
+      myChart.setOption(option);
+      for (let i = startIndex; i < years.length - 1; ++i) {
+        (function (i) {
+          setTimeout(function () {
+            updateYear(years[i + 1]);
+          }, (i - startIndex) * updateFrequency);
+        })(i);
+      }
+      function updateYear(year) {
+        let source = data.slice(1).filter(function (d) {
+          return d[4] === year;
+        });
+        option.series[0].data = source;
+        option.graphic.elements[0].style.text = year;
+        myChart.setOption(option);
+      }
+    });
+
+    option && myChart.setOption(option);
+  </script>
+</html>

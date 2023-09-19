@@ -5,68 +5,193 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="" />
-    <script src=""></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="../layui-v2.8.17/layui/css/layui.css" />
+    <script src="../layui-v2.8.17/layui/layui.js"></script>
+    <script src="../js/echarts@5.4.3.min.js"></script>
   </head>
   <style></style>
   <body>
+    <!-- <h5 style="margin-bottom: 16px">
+      左右面板<strong class="layui-font-red">联动</strong>选择模式
+      <sup>2.8+</sup> :
+    </h5> -->
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">日期范围</label>
+        <div class="layui-inline" id="ID-laydate-rangeLinked">
+          <div class="layui-input-inline">
+            <input
+              type="text"
+              autocomplete="off"
+              id="ID-laydate-start-date-1"
+              class="layui-input"
+              placeholder="开始日期" />
+          </div>
+          <div class="layui-form-mid">-</div>
+          <div class="layui-input-inline">
+            <input
+              type="text"
+              autocomplete="off"
+              id="ID-laydate-end-date-1"
+              class="layui-input"
+              placeholder="结束日期" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="box" style="width: 500px; height: 500px"></div>
   </body>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
   <script>
-    var chartDom = document.getElementById("box");
-    var myChart = echarts.init(chartDom);
-    var option;
+    layui.use(function () {
+      var laydate = layui.laydate;
 
-    option = {
-      title: {
-        text: "ECharts 入门示例",
-        subtext: "submit",
-        left: "center",
-        top: "center",
-        color: "#aaa",
-        textStyle: {
-          fontSize: 30,
+      // 日期范围 - 左右面板联动选择模式
+      laydate.render({
+        elem: "#ID-laydate-rangeLinked",
+        range: ["#ID-laydate-start-date-1", "#ID-laydate-end-date-1"],
+        rangeLinked: true, // 开启日期范围选择时的区间联动标注模式 ---  2.8+ 新增
+        onConfirm: function (value) {
+          var tmpdate = value.split(" - ");
+          var sIndex = findNearestDateIndex(arr, tmpdate[0]);
+          var eIndex = findNearestDateIndex(arr, tmpdate[1]);
+          var data = arr.slice(sIndex, eIndex + 1);
+          chuliData(data);
+          option = getoption();
+          myChart.setOption(option);
         },
-        subtextStyle: {
-          fontSize: 18,
-          color: "red",
-        },
-      },
-      tooltip: {},
-      legend: {
-        data: ["销量", "库存"],
-      },
-      xAxis: {
-        type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          name: "销量",
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: "bar",
-          showBackground: true,
-          backgroundStyle: {
-            color: "rgba(180, 180, 180, 0.2)",
-          },
-        },
-        {
-          name: "库存",
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: "bar",
-          showBackground: true,
-          backgroundStyle: {
-            color: "rgba(180, 180, 180, 0.2)",
-          },
-        },
-      ],
-    };
+      });
+    });
+    function findNearestDateIndex(arr, targetDate) {
+      // 初始化最小差值和下标
+      let minDiff = Infinity;
+      let nearestIndex = -1;
 
-    option && myChart.setOption(option);
+      // 遍历数组
+      for (let i = 0; i < arr.length; i++) {
+        // 计算当前日期与目标日期的差值
+        const diff = Math.abs(new Date(arr[i].date) - new Date(targetDate));
+
+        // 如果差值更小，则更新最小差值和下标
+        if (diff < minDiff) {
+          minDiff = diff;
+          nearestIndex = i;
+        }
+      }
+
+      return nearestIndex;
+    }
+    var arr = [
+      {
+        date: "2023-09-06",
+        num: 20,
+        price: 2000,
+      },
+      {
+        date: "2023-09-09",
+        num: 40,
+        price: 4000,
+      },
+      {
+        date: "2023-09-12",
+        num: 50,
+        price: 3000,
+      },
+      {
+        date: "2023-09-15",
+        num: 30,
+        price: 5000,
+      },
+      {
+        date: "2023-09-20",
+        num: 60,
+        price: 8000,
+      },
+    ];
+    var order_date = [],
+      num = [],
+      price = [];
+    chuliData(arr);
+    function chuliData(params) {
+      order_date = [];
+      num = [];
+      price = [];
+      params.forEach((item) => {
+        order_date.push(item.date);
+        num.push(item.num);
+        price.push(item.price);
+      });
+    }
+    var myChart = echarts.init(document.getElementById("box"));
+    // 指定图表的配置项和数据
+    function getoption() {
+      return {
+        dataZoom: [
+          {
+            type: "inside", //1平移 缩放
+            throttle: "50", //设置触发视图刷新的频率。单位为毫秒（ms）。
+            minValueSpan: 6, //用于限制窗口大小的最小值,在类目轴上可以设置为 5 表示 5 个类目
+            start: 1, //数据窗口范围的起始百分比 范围是：0 ~ 100。表示 0% ~ 100%。
+            end: 10, //数据窗口范围的结束百分比。范围是：0 ~ 100。
+            zoomLock: true, //如果设置为 true 则锁定选择区域的大小，也就是说，只能平移，不能缩放。
+          },
+        ],
+
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          splitLine: { show: true, lineStyle: { type: "solid" } },
+          axisTick: { show: false },
+          axisLabel: { show: true },
+          data: order_date,
+        },
+        yAxis: [
+          {
+            type: "value",
+            name: "订单数量",
+            splitLine: { show: true, lineStyle: { type: "solid" } },
+            position: "left",
+          },
+          {
+            type: "value",
+            name: "订单金额",
+            splitLine: { show: true, lineStyle: { type: "solid" } },
+            position: "right",
+          },
+        ],
+        series: [
+          {
+            name: "订单数量",
+            data: num,
+            smooth: true,
+            yAxisIndex: 0,
+            type: "line",
+            areaStyle: {
+              color: "rgba(146,223,200)",
+              opacity: 0.8,
+            },
+          },
+          {
+            name: "订单金额",
+            smooth: true,
+            data: price,
+            type: "line",
+            areaStyle: {
+              color: "rgba(120,190,233)",
+              opacity: 0.8,
+            },
+            yAxisIndex: 1,
+          },
+        ],
+        tooltip: {
+          // 设置提升效果
+          trigger: "axis",
+          backgroundColor: "#68CEFF",
+        },
+      };
+    }
+    var option = getoption();
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
   </script>
 </html>

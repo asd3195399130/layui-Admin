@@ -1,0 +1,65 @@
+{
+    "code": 200,
+    "msg": "Success",
+    "data": [
+        {
+            "title": "首页",
+            "icon": "icon-shouye",
+            "children": [
+                {
+                    "title": "仪表盘",
+                    "icon": "icon-yibiaopan",
+                    "url": "home.html"
+                }, {
+                    "title": "学习教程",
+                    "icon": "icon-wendang",
+                    "url": "www.baidu.com"
+                }, {
+                    "title": "视频教程",
+                    "icon": "icon-shipin",
+                    "url": "www.baidu.com"
+                }
+            ]
+        },  {
+            "title": "首页",
+            "icon": "icon-shouye",
+            "children": [
+                {
+                    "title": "仪表盘",
+                    "icon": "icon-yibiaopan",
+                    "url": "home.html"
+                }, {
+                    "title": "学习教程",
+                    "icon": "icon-wendang",
+                    "url": "www.baidu.com"
+                }, {
+                    "title": "视频教程",
+                    "icon": "icon-shipin",
+                    "url": "www.baidu.com"
+                },{
+                    "title": "视频教程",
+                    "icon": "icon-shipin",
+                    "url": "www.baidu.com"
+                }
+            ]
+        },  {
+            "title": "首页",
+            "icon": "icon-shouye",
+            "children": [
+                {
+                    "title": "仪表盘",
+                    "icon": "icon-yibiaopan",
+                    "url": "home.html"
+                }, {
+                    "title": "学习教程",
+                    "icon": "icon-wendang",
+                    "url": "www.baidu.com"
+                }, {
+                    "title": "视频教程",
+                    "icon": "icon-shipin",
+                    "url": "www.baidu.com"
+                }
+            ]
+        }
+    ]
+}

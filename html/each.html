@@ -22,10 +22,21 @@
     option = {
       title: {
         text: "ECharts 入门示例",
+        subtext: "submit",
+        left: "center",
+        top: "center",
+        color: "#aaa",
+        textStyle: {
+          fontSize: 30,
+        },
+        subtextStyle: {
+          fontSize: 18,
+          color: "red",
+        },
       },
       tooltip: {},
       legend: {
-        data: ["销量"],
+        data: ["销量", "库存"],
       },
       xAxis: {
         type: "category",
@@ -37,6 +48,15 @@
       series: [
         {
           name: "销量",
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: "bar",
+          showBackground: true,
+          backgroundStyle: {
+            color: "rgba(180, 180, 180, 0.2)",
+          },
+        },
+        {
+          name: "库存",
           data: [120, 200, 150, 80, 70, 110, 130],
           type: "bar",
           showBackground: true,

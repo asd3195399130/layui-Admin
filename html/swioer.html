@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.css" />
+
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.js"></script>
+  </head>
+  <style>
+    .swiper {
+      width: 600px;
+      height: 600px;
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      height: 600px;
+    }
+  </style>
+  <body>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="../image/203b14311c376b0170a3ada3eb5cbaa83083.png" alt="" />
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="../image/818d32e5346258ca4db0b5586c3aa4247384.png"
+            width="900"
+            height="1000"
+            alt="" />
+        </div>
+        <div class="swiper-slide">Slide 3</div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- 如果需要滚动条 -->
+      <div class="swiper-scrollbar"></div>
+    </div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    var mySwiper = new Swiper(".swiper", {
+      direction: "horizontal", // 垂直切换选项
+      loop: true, // 循环模式选项
+      autoHeight: true,
+      // 如果需要分页器
+      pagination: {
+        el: ".swiper-pagination",
+      },
+
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+
+      // 如果需要滚动条
+      //   scrollbar: {
+      //     el: ".swiper-scrollbar",
+      //   },
+    });
+  </script>
+</html>

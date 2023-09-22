@@ -1,0 +1,19 @@
+$myfoot: "楷体";
+$myColor: red;
+$myfont: bold;
+$myfontsize: 16px;
+$myWidth: 500px;
+$myHeight: 500px;
+$mybg: #0072ff;
+
+#box {
+  width: $myWidth;
+  height: $myHeight;
+  font-family: $myfoot;
+  color: $myColor;
+  font-size: $myfontsize;
+  background: $mybg;
+  text: {
+    align: center;
+  }
+}

@@ -21,6 +21,32 @@
                 }
             ]
         },  {
+            "title": "商品",
+            "icon": "icon-shangcheng-copy",
+            "children": [
+                {
+                    "title": "商品列表",
+                    "icon": "icon-liebiao",
+                    "url": "home.html"
+                }, {
+                    "title": "添加商品",
+                    "icon": "icon-tianjiashangpin",
+                    "url": "www.baidu.com"
+                }, {
+                    "title": "商品分类",
+                    "icon": "icon-fenlei-",
+                    "url": "www.baidu.com"
+                }, {
+                    "title": "商品管理",
+                    "icon": "icon-shipin",
+                    "url": "icon-houtaiguanli-jifenguanli"
+                }, {
+                    "title": "品牌管理",
+                    "icon": "icon-shangpin",
+                    "url": "www.baidu.com"
+                }
+            ]
+        },{
             "title": "首页",
             "icon": "icon-shouye",
             "children": [
@@ -37,24 +63,6 @@
                     "icon": "icon-shipin",
                     "url": "www.baidu.com"
                 },{
-                    "title": "视频教程",
-                    "icon": "icon-shipin",
-                    "url": "www.baidu.com"
-                }
-            ]
-        },  {
-            "title": "首页",
-            "icon": "icon-shouye",
-            "children": [
-                {
-                    "title": "仪表盘",
-                    "icon": "icon-yibiaopan",
-                    "url": "home.html"
-                }, {
-                    "title": "学习教程",
-                    "icon": "icon-wendang",
-                    "url": "www.baidu.com"
-                }, {
                     "title": "视频教程",
                     "icon": "icon-shipin",
                     "url": "www.baidu.com"

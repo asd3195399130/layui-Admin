@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="" />
+    <script src=""></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box"></div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    let id = location.search.split("=")[1];
+    $(function () {
+      $.ajax({
+        url: "http://127.0.0.1:3000/music/list",
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+          let html = `<audio src="${res.data.url}"></audio>`;
+          $("#box").html(html);
+        },
+      });
+    });
+  </script>
+</html>

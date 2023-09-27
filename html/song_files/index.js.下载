@@ -26,7 +26,7 @@ const data = parseLrc();
 const doms = {
     audio: document.querySelector("audio"),
     ul: document.querySelector(".lrc-list"),
-    container: document.querySelector(".container"),
+    contest: document.querySelector(".contest"),
 }
 
 /**
@@ -60,16 +60,16 @@ function createLrcElement() {
 
 createLrcElement();
 
-const containerHeihgt = doms.container.clientHeight,
+const contestHeihgt = doms.contest.clientHeight,
     liHeight = doms.ul.children[0].clientHeight,
-    maxOffset = doms.ul.clientHeight - containerHeihgt;
+    maxOffset = doms.ul.clientHeight - contestHeihgt;
 
 /**
  * 设置offset
  */
 function setOffset() {
     const currentIndex = findIndex();
-    let offset = liHeight * currentIndex + liHeight / 2 - containerHeihgt / 2;
+    let offset = liHeight * currentIndex + liHeight / 2 - contestHeihgt / 2;
 
     // 设置最小offset为0
     if(offset < 0) offset = 0;

@@ -8,23 +8,88 @@
     <link rel="stylesheet" href="" />
     <script src=""></script>
   </head>
-  <style></style>
+  <style>
+    @font-face {
+      font-family: "iconfont"; /* Project id 4269417 */
+      src: url("//at.alicdn.com/t/c/font_4269417_4wm4opevvgm.woff2?t=1695726945779")
+          format("woff2"),
+        url("//at.alicdn.com/t/c/font_4269417_4wm4opevvgm.woff?t=1695726945779")
+          format("woff"),
+        url("//at.alicdn.com/t/c/font_4269417_4wm4opevvgm.ttf?t=1695726945779")
+          format("truetype");
+    }
+
+    .iconfont {
+      font-family: "iconfont" !important;
+      font-size: 20px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: aqua !important;
+    }
+
+    .icon-shangyishou:before {
+      content: "\e603";
+    }
+
+    .icon-xiayishou:before {
+      content: "\e602";
+    }
+
+    .icon-zanting:before {
+      content: "\e667";
+    }
+
+    .icon-bofang:before {
+      content: "\e61d";
+    }
+    ul {
+      list-style: none;
+    }
+  </style>
   <body>
-    <div id="box"></div>
+    <div id="box">
+      <audio src="" autoplay controls></audio>
+      <div class="contest">
+        <ul class="lrc-list"></ul>
+      </div>
+    </div>
+    <div>
+      <i class="iconfont icon-shangyishou"></i>
+    </div>
   </body>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script src="../js/index.js"></script>
   <script>
-    let id = location.search.split("=")[1];
+    const url = "http://127.0.0.1:3000";
     $(function () {
-      $.ajax({
-        url: "http://127.0.0.1:3000/music/list",
-        type: "GET",
-        dataType: "json",
-        success: function (res) {
-          let html = `<audio src="${res.data.url}"></audio>`;
-          $("#box").html(html);
+      // let id = location.search.split("=")[1];
+      $.get(
+        "http://127.0.0.1:3000/music/list",
+        function (res) {
+          $("audio").attr("src", res.data.url);
+          init(res.data.lrc);
         },
-      });
+        "json"
+      );
+      //   $.ajax({
+      //     url: "http://127.0.0.1:3000/music/list",
+      //     type: "GET",
+      //     dataType: "json",
+      //     success: function (res) {
+      //       let tr = ``;
+      //       res.data.forEach((item, index) => {
+      //         tr += `
+      //           <li>
+      //           <p>${item.title}</p>
+      //           <p>${item.singer}</p>
+      //         <audio src="${item.url}" controls></audio>
+      //           </li>
+      //           `;
+      //       });
+      //       $("ol").html(tr);
+      //     },
+      //   });
     });
   </script>
 </html>

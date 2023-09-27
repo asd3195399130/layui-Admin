@@ -13,75 +13,103 @@
     <div id="box">
       <audio src="../audio/卜卦 - 崔子格.mp3" autoplay controls></audio>
       <div class="contest">
-        <ul class="lrc-list">
-          <li>卜卦 - 崔子格 (Queena)</li>
-          <li>词：陈立志</li>
-          <li>曲：佚 名</li>
-          <li>风吹沙 蝶恋花 千古佳话</li>
-          <li>似水中月 情迷着镜中花</li>
-          <li>竹篱笆 木琵琶 拱桥月下</li>
-          <li>谁在弹唱 思念远方牵挂</li>
-          <li>那年仲夏 你背上行囊离开家</li>
-          <li>古道旁 我欲语泪先下</li>
-          <li>庙里求签 我哭诉青梅等竹马</li>
-          <li>求 菩萨保佑我俩</li>
-          <li>不停的猜 猜 猜 又卜了一卦</li>
-          <li>吉凶祸福 还是担惊受怕</li>
-          <li>对你的爱 爱 爱 望断了天涯</li>
-          <li>造化弄人 缘分阴错阳差</li>
-          <li>风吹沙 蝶恋花 千古佳话</li>
-          <li>似水中月 情迷着镜中花</li>
-          <li>竹篱笆 木琵琶 拱桥月下</li>
-          <li>谁在弹唱 思念远方牵挂</li>
-          <li>那年仲夏 你背上行囊离开家</li>
-          <li>古道旁 我欲语泪先下</li>
-          <li>田里庄稼 收获了一茬又一茬</li>
-          <li>而 我们何时发芽</li>
-          <li>不停的猜 猜 猜 又卜了一卦</li>
-          <li>吉凶祸福 还是担惊受怕</li>
-          <li>对你的爱 爱 爱 望断了天涯</li>
-          <li>造化弄人 缘分阴错阳差</li>
-          <li>猜 猜 猜 又卜了一卦</li>
-          <li>是上上签 可还是放不下</li>
-          <li>对你的爱 爱 挨过几个冬夏</li>
-          <li>日夜思念 祈求别再变卦</li>
-        </ul>
+        <ul class="lrc-list"></ul>
       </div>
     </div>
   </body>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
   <script src="../js/卜卦.js"></script>
-  <script src="./song_files/index.js.下载"></script>
-  <!-- <script>
-    $(function () {
-      parseInt(lrc);
-    });
-    function parseInt(data) {
-      //   console.log(data);
-      let arr = data.split("\n");
-      //   console.log(arr);
-      let result = arr.map((item) => {
-        const wora = item.split("]");
+  <!-- <script src="./song_files/index.js.下载"></script> -->
+  <script>
+    /**
+     * 解析lrc文件，得到{time: number, word: string}[]
+     */
+    function parseLrc() {
+      const arr = lrc.split("\n");
+      const result = arr.map((item) => {
+        const wordArr = item.split("]");
         return {
-          time: parstTime(wora[0].substring(1)),
-          word: wora[1],
+          time: parseTime(wordArr[0].substring(1)),
+          word: wordArr[1],
         };
       });
       return result;
     }
-    function parstTime(timesrting) {
-      const timearr = timesrting.split(":");
-      return timearr[0].split(".")[0] * 60 + timearr[1];
+
+    /**
+     * 解析时间字符串，获得number（秒）
+     */
+    function parseTime(timeString) {
+      const timeArr = timeString.split(":");
+      return +timeArr[0] * 60 + +timeArr[1];
     }
-    const data = parseInt();
+
+    const data = parseLrc();
+
     const doms = {
-      Audio: $("audio"),
-      ul: $("ul"),
-      contest: $(".contest"),
+      audio: document.querySelector("audio"),
+      ul: document.querySelector(".lrc-list"),
+      contest: document.querySelector(".contest"),
     };
-    function findindex() {
-      const currtime = doms.Audio.currtime;
+
+    /**
+     * 根据当前音频播放时间，获得需要高亮的歌词index
+     */
+    function findIndex() {
+      const currentTime = doms.audio.currentTime;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].time > currentTime) {
+          return i - 1;
+        }
+      }
+
+      // 如果没有找到，说明已经到歌词的最后一句
+      return data.length - 1;
     }
-  </script> -->
+
+    /**
+     * 创建li元素
+     */
+    function createLrcElement() {
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < data.length; i++) {
+        const li = document.createElement("li");
+        li.textContent = data[i].word;
+        frag.appendChild(li);
+      }
+
+      doms.ul.appendChild(frag);
+    }
+
+    createLrcElement();
+
+    const contestHeihgt = doms.contest.clientHeight,
+      liHeight = doms.ul.children[0].clientHeight,
+      maxOffset = doms.ul.clientHeight - contestHeihgt;
+
+    /**
+     * 设置offset
+     */
+    function setOffset() {
+      const currentIndex = findIndex();
+      let offset = liHeight * currentIndex + liHeight / 2 - contestHeihgt / 2;
+
+      // 设置最小offset为0
+      if (offset < 0) offset = 0;
+
+      //设置最大offset
+      if (offset > maxOffset) offset = maxOffset;
+
+      doms.ul.style.transform = `translateY(-${offset}px)`;
+
+      //设置active之前要消除之前的active
+      const li = doms.ul.querySelector(".active");
+      if (li) li.classList.remove("active");
+
+      doms.ul.children[currentIndex].classList.add("active");
+    }
+
+    doms.audio.addEventListener("timeupdate", setOffset);
+  </script>
 </html>

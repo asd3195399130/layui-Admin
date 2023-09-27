@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/qqmusic.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.css" />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.js"></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box">
+      <div class="header">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper"></div>
+          <!-- <div class="swiper-pagination"></div> -->
+        </div>
+      </div>
+
+      <div class="content">
+        <ol class="custom-list">
+          <li>
+            <div>
+              <p></p>
+              <p></p>
+            </div>
+          </li>
+          <li>反扑</li>
+          <li>了吗</li>
+        </ol>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    let img = [
+      "../image/11472310d9e2de944ec0c12ae7929e38.jpg",
+      "../image/1a775831360b59e96659a2d949acdfec6825.png",
+      "../image/1e9d06c0cba99eca16f9d82e190ea7ed5073.png",
+      "../image/27d1439ab731dd3ac39d4e45f8578f0c8092.png",
+      "../image/3ab5144e9a8c30c09c791e235b4d56259570.png",
+      "../image/5269e24ff6c6f5394a14845e6f05df305756.png",
+      "../image/3ab5144e9a8c30c09c791e235b4d56259570.png",
+      "../image/755035b24de9d4cd19560ec5f4e7c4a7752.png",
+      "../image/818d32e5346258ca4db0b5586c3aa4247384.png",
+    ];
+    var swiper = new Swiper(".mySwiper", {
+      //   autoplay: true,
+      cssMode: true,
+      loop: true,
+      autoplay: {
+        delay: 3000,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      mousewheel: true,
+      keyboard: true,
+    });
+    $(function () {
+      let html = "";
+      img.forEach((item) => {
+        html += `<div class="swiper-slide">
+                 <img src="${item}" alt="">
+            </div>`;
+      });
+      $(".swiper-wrapper").html(html);
+    });
+  </script>
+</html>

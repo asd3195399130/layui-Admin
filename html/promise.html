@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="" />
+    <script src=""></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box"></div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    // function* fn() {
+    //   yield "黑猫警长", yield "一只耳", yield "没头脑";
+    // }
+    // let itractoe = fn();
+    // console.log(itractoe.next());
+    // console.log(itractoe.next());
+    // console.log(itractoe.next());
+    // for (let v of fn()) {
+    //   console.log(v);
+    // }
+    let p = new Promise((resolve, reject) => {
+      //   resolve("成功了");
+      setTimeout(() => {
+        let isflag = false;
+        if (isflag) {
+          let data = "数据库中的数据";
+          resolve(data);
+        } else {
+          let err = "数据失败";
+          reject(err);
+        }
+      }, 1000);
+    }).then(
+      function (value) {
+        console.log(value);
+      },
+      function (reason) {
+        console.log(reason);
+      }
+    );
+  </script>
+</html>

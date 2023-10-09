@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="" />
+    <script src=""></script>
+  </head>
+  <style></style>
+  <body>
+    <div id="box"></div>
+  </body>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.js"></script>
+  <script>
+    // class Phone {
+    //   // 构造方法
+    //   constructor(brand, price) {
+    //     this.brand = brand;
+    //     this.price = price;
+    //   }
+    //   // 父类的成员属性
+    //   call() {
+    //     console.log("我可以打电话!!");
+    //   }
+    // }
+
+    // class SmartPhone extends Phone {
+    //   // 构造方法
+    //   constructor(brand, price, color, size) {
+    //     super(brand, price); // Phone.call(this, brand, price)
+    //     this.color = color;
+    //     this.size = size;
+    //   }
+
+    //   photo() {
+    //     console.log("拍照");
+    //   }
+
+    //   playGame() {
+    //     console.log("玩游戏");
+    //   }
+
+    //   // 子类重写父类方法，super.call()可以调父类方法
+    //   call() {
+    //     console.log("我可以进行视频通话");
+    //   }
+    // }
+
+    // const xiaomi = new SmartPhone("小米", 799, "黑色", "4.7inch");
+    // // console.log(xiaomi);
+    // xiaomi.call();
+    // xiaomi.photo();
+    // xiaomi.playGame();
+    // class Phone {
+    //   //静态属性
+    //   static name = "智能手机";
+    //   static change() {
+    //     console.log("看尽世间繁华");
+    //   }
+    // }
+    // let nokia = new Phone();
+    // console.log(nokia.name);
+    // console.log(Phone.name);
+    // console.log(Phone.change());
+    // class School {
+    //   get student() {
+    //     // console.log(123);
+    //     console.log("今年的录取额学生挺多的");
+    //     return "今年的尖子生有好多";
+    //   }
+    //   set student(Student) {
+    //     alert("今年有" + Student + "个学生");
+    //   }
+    // }
+    // let sc = new School();
+    // // console.log(sc.student);
+    // sc.student = 6000;
+    // async function fun() {
+    //   await text;
+    // }
+    function funawait() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log("helloworld!!!!" + "@@@@");
+          resolve("中将一百万");
+        }, 1000);
+      });
+    }
+    async function hellAsync() {
+      let res = await funawait();
+      console.log(res);
+      console.log("helloworld " + "看到全世界");
+    }
+    hellAsync();
+  </script>
+</html>

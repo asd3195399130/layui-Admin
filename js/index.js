@@ -8,6 +8,7 @@ function init(lrc) {
   createLrcElement();
 }
 function parseLrc(lrc) {
+  console.log(lrc);
   const arr = lrc.split("\n");
   const result = arr.map((item) => {
     const wordArr = item.split("]");
